@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Nepal Treks | Nepal Trekking Adventures | Explore the Himalayas</title>
+    <meta name="description"
+        content="Discover all our Nepal trekking routes. Filter by difficulty, duration, and region. From beginner-friendly treks to challenging expeditions in the Himalayas.">
+    <meta name="keywords"
+        content="Nepal treks, all trekking routes, Himalayan treks, trekking packages, adventure tours Nepal">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><i class="fas fa-mountain"></i> Nepal Trekking</h2>
+                </div>
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#home" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="popular-treks.html" class="nav-link">Popular Treks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="treks.html" class="nav-link">All Treks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="about.html" class="nav-link">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-toggle" id="nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="treks-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">All Nepal Treks</h1>
+                <p class="hero-subtitle">Discover the perfect trekking adventure for your skill level and time frame</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="difficulty-filter">
+                        <i class="fas fa-chart-bar"></i>
+                        Difficulty
+                    </label>
+                    <select id="difficulty-filter" class="filter-select">
+                        <option value="">All Difficulties</option>
+                        <option value="easy">Easy</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="challenging">Challenging</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="duration-filter">
+                        <i class="fas fa-clock"></i>
+                        Duration
+                    </label>
+                    <select id="duration-filter" class="filter-select">
+                        <option value="">All Durations</option>
+                        <option value="short">1-7 Days</option>
+                        <option value="medium">8-14 Days</option>
+                        <option value="long">15+ Days</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="region-filter">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Region
+                    </label>
+                    <select id="region-filter" class="filter-select">
+                        <option value="">All Regions</option>
+                        <option value="everest">Everest Region</option>
+                        <option value="annapurna">Annapurna Region</option>
+                        <option value="langtang">Langtang Region</option>
+                        <option value="manaslu">Manaslu Region</option>
+                        <option value="dolpo">Dolpo Region</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <button id="clear-filters" class="clear-filters-btn">
+                        <i class="fas fa-times"></i>
+                        Clear Filters
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search treks..." />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treks Grid Section -->
+    <section class="all-treks-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Choose Your Adventure</h2>
+                <p class="section-subtitle">From easy day hikes to challenging high-altitude expeditions</p>
+            </div>
+
+            <div class="results-info">
+                <p id="results-count">Showing <span class="count">12</span> treks</p>
+            </div>
+
+            <div class="treks-grid" id="treks-grid">
+                <!-- Trek cards will be dynamically generated -->
+            </div>
+
+            <div class="load-more-container" id="load-more-container">
+                <button class="load-more-btn" id="load-more-btn">
+                    <i class="fas fa-plus"></i>
+                    Load More Treks
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-mountain"></i> Nepal Trekking</h3>
+                    <p>Your trusted partner for unforgettable Himalayan adventures. Experience the beauty of Nepal with
+                        expert guides and authentic cultural experiences.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Treks</h4>
+                    <ul>
+                        <li><a href="trek-details.html?trek=everest-base-camp">Everest Base Camp</a></li>
+                        <li><a href="trek-details.html?trek=annapurna-circuit">Annapurna Circuit</a></li>
+                        <li><a href="trek-details.html?trek=langtang-valley">Langtang Valley</a></li>
+                        <li><a href="treks.html">View All Treks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#about">About Nepal</a></li>
+                        <li><a href="index.html#popular-treks">Popular Treks</a></li>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                        <li><a href="treks.html">All Treks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> Ratnachowk, Pokhara, Nepal</p>
+                        <p><i class="fas fa-phone"></i> +977 98000000</p>
+                        <p><i class="fas fa-envelope"></i> info@nepaltrekking.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Nepal Trekking Adventures. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/treks.js"></script>
+</body>
+
+</html>

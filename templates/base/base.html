@@ -1,0 +1,51 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      About Nepal | World's Premier Trekking Destination | Nepal Trekking
+      Adventures
+    </title>
+    <meta
+      name="description"
+      content="Discover why Nepal is the world's premier trekking destination. Home to Mount Everest and 8 of the world's highest peaks, rich culture, and diverse landscapes."
+    />
+    <meta
+      name="keywords"
+      content="Nepal trekking, about Nepal, Himalayas, Mount Everest, Sherpa culture, trekking destination"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static "css/responsive.css" %}" /> 
+    
+    <link rel="stylesheet" href="{% static "css/style.css" %}" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  {% include 'home/navbar.html' %}
+
+    <!--Page-specific content block -->
+    {% block content %}{% endblock %}
+
+    <!-- ✅ Footer -->
+    {% include 'home/footer.html' %}
+  </body>
+
+  <!-- Scripts -->
+  <script src="{% static 'js/script.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+  <body>
+    
+</html>
