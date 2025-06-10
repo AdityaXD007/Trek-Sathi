@@ -1064,3 +1064,13 @@ window.TreksPage = {
   getTrekById: (id) => treksData.find((trek) => trek.id === id),
   getAllTreks: () => [...treksData],
 };
+
+function togglePassword() {
+  const passwordInput = document.getElementById("password");
+  const icon = document.querySelector(".toggle-password");
+  const isPassword = passwordInput.type === "password";
+
+  passwordInput.type = isPassword ? "text" : "password";
+  icon.classList.toggle("fa-eye");
+  icon.classList.toggle("fa-eye-slash");
+}

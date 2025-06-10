@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+import random
+from django.conf import settings
 
 # Create your views here.
 def home(request):
@@ -60,3 +64,52 @@ def signup_view(request):
 def logout_view(request):
     logout(request)  # logs out on both GET and POST
     return redirect('home')
+
+
+@login_required
+def dashboard_view(request):
+    return render(request, 'home/dashboard.html')
+
+
+
+def password_reset_request(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        try:
+            user = User.objects.get(email=email)
+            otp = str(random.randint(100000, 999999))  # 6-digit OTP
+            request.session['reset_email'] = email
+            request.session['otp'] = otp
+            
+            send_mail(
+                'Your OTP for Password Reset',
+                f'Your OTP is: {otp}',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False
+            )
+            return redirect('password_reset_otp')
+        except User.DoesNotExist:
+            return render(request, 'reset_password/password_reset.html', {'error': 'User not found'})
+    return render(request, 'reset_password/password_reset.html')
+
+def password_reset_otp(request):
+    if request.method == "POST":
+        if request.POST['otp'] == request.session.get('otp'):
+            return redirect('password_reset_confirm')
+        return render(request, 'reset_password/password_reset_otp.html', {'error': 'Invalid OTP'})
+    return render(request, 'reset_password/password_reset_otp.html')
+
+def password_reset_confirm(request):
+    if request.method == "POST":
+        password = request.POST['password']
+        email = request.session.get('reset_email')
+        try:
+            user = User.objects.get(email=email)
+            user.set_password(password)
+            user.save()
+            request.session.flush()
+            return render(request, 'reset_password/password_reset_complete.html')
+        except:
+            return redirect('password_reset')
+    return render(request, 'reset_password/password_reset_confirm.html')

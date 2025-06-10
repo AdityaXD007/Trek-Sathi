@@ -240,7 +240,7 @@ button {
   font-size: 1.1rem;
   font-weight: 600;
   box-shadow: 0 8px 25px rgba(45, 90, 61, 0.3);
-  animation: fadeInUp 1s ease-out 1s both;
+  animation: fadeInUp 0.5s ease-out 0.25s both;
   transition: var(--transition);
 }
 
@@ -286,6 +286,47 @@ button {
 .scroll-indicator p {
   font-size: 0.9rem;
   opacity: 0.8;
+}
+
+/* Base button style */
+.btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Outlined style (Log in) */
+.btn-outline {
+  background-color: var(--white);
+  color: var(--deep-blue);
+  border: 1px solid var(--stone-gray);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-green);
+  color: var(--white);
+  border-color: var(--primary-green);
+  box-shadow: 0 4px 8px rgba(45, 90, 61, 0.3);
+}
+
+/* Primary style (Sign up) */
+.btn-primary {
+  background-color: var(--light-green);
+  color: var(--white);
+  border: 1px solid var(--secondary-green);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-green);
+  color: var(--white);
+  border-color: var(--primary-green);
+  box-shadow: 0 4px 8px rgba(45, 90, 61, 0.3);
 }
 
 /* ============================================
@@ -550,8 +591,15 @@ button {
 
 .trek-overlay {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .difficulty-badge {
@@ -930,6 +978,206 @@ button {
 .fade-in {
   opacity: 0;
   animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* ============================================
+   LOGIN PAGE STYLES
+   ============================================ */
+
+.login-section {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+  background-color: #f9f9f9;
+}
+
+.login-container {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary-green);
+}
+
+.login-form .form-group {
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.form-errors {
+  background: #ffe5e5;
+  padding: 0.75rem 1rem;
+  color: #c0392b;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+}
+
+.login-links {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+/* ============================================
+   SIGNUP PAGE STYLES
+   ============================================ */
+
+.signup-section {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+  background-color: var(--light-gray);
+}
+
+.signup-container {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  width: 100%;
+}
+
+.signup-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary-green);
+  font-family: var(--font-secondary);
+}
+
+.signup-form .form-group {
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.signup-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: var(--font-primary);
+}
+
+.signup-form button {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary-green);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.signup-form button:hover {
+  background-color: var(--secondary-green);
+}
+
+.form-errors {
+  background: #ffe5e5;
+  padding: 0.75rem 1rem;
+  color: #c0392b;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+}
+
+.signup-links {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-family: var(--font-primary);
+}
+
+.signup-links a {
+  color: var(--mountain-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-links a:hover {
+  text-decoration: underline;
+}
+/* Password eye toggler */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for the eye icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: var(--primary-green);
+}
+
+/* Chnage link color */
+.hover-blue {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hover-blue:hover {
+  color: blue;
+}
+
+.box-shadow-link {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.box-shadow-link:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 255, 0.2); /* soft blue glow */
 }
 
 /* ============================================
@@ -1427,7 +1675,7 @@ button {
 .featured-badge {
   position: absolute;
   top: 1rem;
-  left: 1rem;
+  right: 1rem;
   background: var(--primary-green);
   color: var(--white);
   padding: 0.5rem 1rem;
@@ -1437,6 +1685,8 @@ button {
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  pointer-events: auto;
+  z-index: 2;
 }
 
 .trek-highlights {
