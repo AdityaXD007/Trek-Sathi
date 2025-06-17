@@ -6,6 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 import random
 from django.conf import settings
+from django.shortcuts import render, get_object_or_404
+from .models import Trek
+from django.db.models import Q
+from django.http import JsonResponse 
+
 
 # Create your views here.
 def home(request):
@@ -18,12 +23,92 @@ def contact(request):
     return render(request, 'home/contact.html')
 
 def popularTreks(request):
-    return render(request, 'home/popularTreks.html')
+     # Get exactly 3 featured treks (or all if less than 3 exist)
+    featured = Trek.objects.filter(is_featured=True).order_by('-id')[:3]  # Using ID for ordering
+    
+    # Calculate how many regular treks we need to reach 6 total
+    remaining = 6 - len(featured)
+    regular = Trek.objects.filter(is_featured=False).order_by('id')[:remaining]
+    
+    # Combine both querysets
+    all_treks = list(featured) + list(regular)
+    
+    context = {'treks': all_treks}
+    return render(request, 'home/popularTreks.html', context)
 
-def trekDetails(request):
-    return render(request, 'home/treks.html')
+def trek_detail(request, id):
+    trek = get_object_or_404(Trek, id=id)
+    highlights = trek.highlights.split('\n') if trek.highlights else []
+
+    context = {
+        'trek': trek,
+        'highlights': highlights,
+    }
+    return render(request, 'home/trek_detail.html', context)
 
 
+
+def trek(request):
+    # Get all treks initially
+    treks = Trek.objects.all()
+    
+    # Get filter parameters from request
+    difficulty = request.GET.get('difficulty')
+    duration = request.GET.get('duration')
+    region = request.GET.get('region')
+    search_query = request.GET.get('search')
+    
+    # Apply filters
+    if difficulty:
+        treks = treks.filter(difficulty=difficulty)
+    if region:
+        treks = treks.filter(region__icontains=region)
+    if search_query:
+        treks = treks.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(highlights__icontains=search_query)
+        )
+    
+    # Duration filtering
+    if duration == 'short':
+        treks = treks.filter(duration__lte=7)
+    elif duration == 'medium':
+        treks = treks.filter(duration__gt=7, duration__lte=14)
+    elif duration == 'long':
+        treks = treks.filter(duration__gt=14)
+    
+    context = {
+        'treks': treks,
+        'current_difficulty': difficulty or '',
+        'current_duration': duration or '',
+        'current_region': region or '',
+        'search_query': search_query or '',
+    }
+    return render(request, 'home/treks.html', context)
+
+
+def search_treks(request):
+    query = request.GET.get('q', '').strip().lower()
+    
+    if query:
+        treks = Trek.objects.filter(
+            Q(name__icontains=query) |
+            Q(region__icontains=query) |
+            Q(short_description__icontains=query)
+        )[:10]  # Limit to 10 results for performance
+    else:
+        treks = Trek.objects.none()
+    
+    results = [{
+        'id': trek.id,
+        'name': trek.name,
+        'image_url': trek.featured_image.url,
+        'short_description': trek.short_description,
+        'url': trek.get_absolute_url()
+    } for trek in treks]
+    
+    return JsonResponse({'treks': results})
 
 def login_view(request):
     if request.method == 'POST':
@@ -41,8 +126,6 @@ def login_view(request):
     next_url = request.GET.get('next', '')
     return render(request, 'home/login.html', {'next': next_url})
 
-
-
 def signup_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -54,13 +137,16 @@ def signup_view(request):
             messages.error(request, 'Passwords do not match')
         elif User.objects.filter(username=username).exists():
             messages.error(request, 'Username already exists')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already registered')
         else:
             user = User.objects.create_user(username=username, email=email, password=password1)
+            user.is_staff = True  # ✅ Make user appear in the admin panel (only for dev/testing)
+            user.save()
             login(request, user)
             return redirect('home')  # Redirect to homepage
 
     return render(request, 'home/signup.html')
-
 def logout_view(request):
     logout(request)  # logs out on both GET and POST
     return redirect('home')

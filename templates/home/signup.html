@@ -1,14 +1,14 @@
 {% extends "base/base.html" %} {% block content %}
 
-<section class="login-section">
-  <div class="login-container">
-    <h2 class="login-title">Create Your Account</h2>
+<section class="signup-section">
+  <div class="signup-container">
+    <h2 class="signup-title">Create Your Account</h2>
 
     {% if messages %} {% for message in messages %}
     <div class="form-errors">{{ message }}</div>
     {% endfor %} {% endif %}
 
-    <form method="POST" action="{% url 'signup' %}" class="login-form">
+    <form method="POST" action="{% url 'signup' %}" class="signup-form">
       {% csrf_token %}
 
       <div class="form-group">
@@ -35,24 +35,36 @@
 
       <div class="form-group">
         <label for="password1">Password</label>
-        <input
-          type="password"
-          id="password1"
-          name="password1"
-          required
-          placeholder="Create a password"
-        />
+        <div class="password-wrapper">
+          <input
+            type="password"
+            id="password1"
+            name="password1"
+            required
+            placeholder="Create a password"
+          />
+          <i
+            class="fas fa-eye toggle-password"
+            onclick="togglePasswordField(this)"
+          ></i>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="password2">Confirm Password</label>
-        <input
-          type="password"
-          id="password2"
-          name="password2"
-          required
-          placeholder="Confirm your password"
-        />
+        <div class="password-wrapper">
+          <input
+            type="password"
+            id="password2"
+            name="password2"
+            required
+            placeholder="Confirm your password"
+          />
+          <i
+            class="fas fa-eye toggle-password"
+            onclick="togglePasswordField(this)"
+          ></i>
+        </div>
       </div>
 
       <button type="submit" class="cta-button">
@@ -61,11 +73,22 @@
       </button>
     </form>
 
-    <div class="login-links">
+    <div class="signup-links">
       Already have an account?
       <a href="{% url 'login' %}" class="hover-blue box-shadow-link">Login</a>
     </div>
   </div>
 </section>
+
+<script>
+  function togglePasswordField(icon) {
+    const passwordInput = icon.previousElementSibling;
+    const isPassword = passwordInput.type === "password";
+
+    passwordInput.type = isPassword ? "text" : "password";
+    icon.classList.toggle("fa-eye");
+    icon.classList.toggle("fa-eye-slash");
+  }
+</script>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-{%extends "base/base.html"%} {%block content%}
+{% extends "base/base.html" %} {% block content %}
 
 <!-- Hero Section -->
 <section class="popular-treks-hero">
@@ -25,309 +25,62 @@
       </p>
     </div>
     <div class="treks-grid">
-      <!-- Everest Base Camp Trek -->
-      <div class="trek-card featured" data-trek="everest">
+      {% for trek in treks|slice:":6" %}
+      <div class="trek-card featured" data-trek="{{ trek.id }}">
         <div class="trek-image">
-          <img
-            src="https://ugc.same-assets.com/mvkobjI8Hw3EsrxG2dBUmZ9k1sc2-dOY.jpeg"
-            alt="Everest Base Camp Trek"
-            loading="lazy"
-          />
+          <img src="{{ trek.featured_image.url }}" alt="{{ trek.name }}" />
           <div class="trek-overlay">
             <div class="trek-difficulty">
-              <span class="difficulty-badge challenging">Challenging</span>
+              <span class="difficulty-badge {{ trek.difficulty }}"
+                >{{ trek.get_difficulty_display }}</span
+              >
             </div>
+            {% if trek.featured_badge_text %}
             <div class="featured-badge">
               <i class="fas fa-star"></i>
-              Most Popular
+              {{ trek.featured_badge_text }}
             </div>
+            {% endif %}
           </div>
         </div>
         <div class="trek-content">
-          <h3 class="trek-title">Everest Base Camp Trek</h3>
+          <h3 class="trek-title">{{ trek.name }}</h3>
           <div class="trek-details">
             <div class="trek-detail">
               <i class="fas fa-clock"></i>
-              <span>14 Days</span>
+              <span>{{ trek.duration }} Days</span>
             </div>
             <div class="trek-detail">
               <i class="fas fa-mountain"></i>
-              <span>5,364m</span>
+              <span>{{ trek.max_elevation }}</span>
             </div>
             <div class="trek-detail">
               <i class="fas fa-map-marker-alt"></i>
-              <span>Khumbu Region</span>
+              <span>{{ trek.region }}</span>
             </div>
           </div>
-          <p class="trek-description">
-            The ultimate adventure to the base of the world's highest peak.
-            Experience stunning mountain views, Sherpa culture, and the thrill
-            of standing at Everest Base Camp.
-          </p>
+          <p class="trek-description">{{ trek.short_description }}</p>
           <div class="trek-highlights">
             <h4>Highlights:</h4>
             <ul>
-              <li>Stand at Everest Base Camp (5,364m)</li>
-              <li>Visit Tengboche Monastery</li>
-              <li>Experience Sherpa culture in Namche Bazaar</li>
-              <li>Panoramic views from Kala Patthar</li>
+              {% for highlight in trek.get_highlights_list %}
+              <li>{{ highlight }}</li>
+              {% endfor %}
             </ul>
           </div>
-          <div class="trek-price">From $1,299</div>
-          <button
-            class="trek-button"
-            onclick="viewTrekDetails('everest-base-camp')"
-          >
+          <div class="trek-price">From Rs. {{ trek.price }}</div>
+          <a href="{% url 'trek_detail' trek.id %}" class="trek-button">
             View Details <i class="fas fa-arrow-right"></i>
-          </button>
+          </a>
         </div>
       </div>
-
-      <!-- Annapurna Circuit Trek -->
-      <div class="trek-card featured" data-trek="annapurna">
-        <div class="trek-image">
-          <img
-            src="https://ugc.same-assets.com/WkhMVeh5OaQzwPRu_lVYvlvKxC6Zoa8k.jpeg"
-            alt="Annapurna Circuit Trek"
-            loading="lazy"
-          />
-          <div class="trek-overlay">
-            <div class="trek-difficulty">
-              <span class="difficulty-badge moderate">Moderate</span>
-            </div>
-            <div class="featured-badge">
-              <i class="fas fa-award"></i>
-              Classic Route
-            </div>
-          </div>
-        </div>
-        <div class="trek-content">
-          <h3 class="trek-title">Annapurna Circuit Trek</h3>
-          <div class="trek-details">
-            <div class="trek-detail">
-              <i class="fas fa-clock"></i>
-              <span>16 Days</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-mountain"></i>
-              <span>5,416m</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Annapurna Region</span>
-            </div>
-          </div>
-          <p class="trek-description">
-            One of Nepal's classic treks featuring diverse landscapes, from
-            subtropical forests to high alpine deserts, crossing the challenging
-            Thorong La Pass.
-          </p>
-          <div class="trek-highlights">
-            <h4>Highlights:</h4>
-            <ul>
-              <li>Cross Thorong La Pass (5,416m)</li>
-              <li>Diverse landscapes and climates</li>
-              <li>Visit sacred Muktinath Temple</li>
-              <li>Experience different cultures</li>
-            </ul>
-          </div>
-          <div class="trek-price">From $899</div>
-          <button
-            class="trek-button"
-            onclick="viewTrekDetails('annapurna-circuit')"
-          >
-            View Details <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Langtang Valley Trek -->
-      <div class="trek-card featured" data-trek="langtang">
-        <div class="trek-image">
-          <img
-            src="https://ugc.same-assets.com/_NbF9QWSGpHijdluyATJ2H8Juj2F-mcU.webp"
-            alt="Langtang Valley Trek"
-            loading="lazy"
-          />
-          <div class="trek-overlay">
-            <div class="trek-difficulty">
-              <span class="difficulty-badge easy">Easy</span>
-            </div>
-            <div class="featured-badge">
-              <i class="fas fa-heart"></i>
-              Family Friendly
-            </div>
-          </div>
-        </div>
-        <div class="trek-content">
-          <h3 class="trek-title">Langtang Valley Trek</h3>
-          <div class="trek-details">
-            <div class="trek-detail">
-              <i class="fas fa-clock"></i>
-              <span>8 Days</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-mountain"></i>
-              <span>4,984m</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Langtang Region</span>
-            </div>
-          </div>
-          <p class="trek-description">
-            Known as the "Valley of Glaciers," this trek offers stunning
-            mountain views, rich Tamang culture, and beautiful rhododendron
-            forests.
-          </p>
-          <div class="trek-highlights">
-            <h4>Highlights:</h4>
-            <ul>
-              <li>Visit Kyanjin Gompa monastery</li>
-              <li>Stunning Langtang Lirung views</li>
-              <li>Rich Tamang culture</li>
-              <li>Beautiful rhododendron forests</li>
-            </ul>
-          </div>
-          <div class="trek-price">From $599</div>
-          <button
-            class="trek-button"
-            onclick="viewTrekDetails('langtang-valley')"
-          >
-            View Details <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Annapurna Base Camp Trek -->
-      <div class="trek-card" data-trek="annapurna-base-camp">
-        <div class="trek-image">
-          <img
-            src="https://ugc.same-assets.com/soLNz1n9ktspFeo0BVB1kqvX2J1k3hlM.jpeg"
-            alt="Annapurna Base Camp Trek"
-            loading="lazy"
-          />
-          <div class="trek-overlay">
-            <div class="trek-difficulty">
-              <span class="difficulty-badge moderate">Moderate</span>
-            </div>
-          </div>
-        </div>
-        <div class="trek-content">
-          <h3 class="trek-title">Annapurna Base Camp Trek</h3>
-          <div class="trek-details">
-            <div class="trek-detail">
-              <i class="fas fa-clock"></i>
-              <span>12 Days</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-mountain"></i>
-              <span>4,130m</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Annapurna Region</span>
-            </div>
-          </div>
-          <p class="trek-description">
-            A spectacular trek through diverse landscapes to the heart of the
-            Annapurna Sanctuary, surrounded by towering peaks.
-          </p>
-          <div class="trek-price">From $799</div>
-          <button
-            class="trek-button"
-            onclick="viewTrekDetails('annapurna-base-camp')"
-          >
-            View Details <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Gokyo Lakes Trek -->
-      <div class="trek-card" data-trek="gokyo-lakes">
-        <div class="trek-image">
-          <img
-            src="https://ugc.same-assets.com/N0uWHlRmxbEb3vA5De3OKvBfw6tgO2I8.jpeg"
-            alt="Gokyo Lakes Trek"
-            loading="lazy"
-          />
-          <div class="trek-overlay">
-            <div class="trek-difficulty">
-              <span class="difficulty-badge challenging">Challenging</span>
-            </div>
-          </div>
-        </div>
-        <div class="trek-content">
-          <h3 class="trek-title">Gokyo Lakes Trek</h3>
-          <div class="trek-details">
-            <div class="trek-detail">
-              <i class="fas fa-clock"></i>
-              <span>15 Days</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-mountain"></i>
-              <span>5,357m</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Everest Region</span>
-            </div>
-          </div>
-          <p class="trek-description">
-            An alternative route in the Everest region featuring pristine alpine
-            lakes and spectacular views from Gokyo Ri.
-          </p>
-          <div class="trek-price">From $1,199</div>
-          <button class="trek-button" onclick="viewTrekDetails('gokyo-lakes')">
-            View Details <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Poon Hill Trek -->
-      <div class="trek-card" data-trek="poon-hill">
-        <div class="trek-image">
-          <img
-            src="https://ugc.same-assets.com/It0Fi5GgJbXS8byO3NFyGbqTFwtxGPMi.jpeg"
-            alt="Poon Hill Trek"
-            loading="lazy"
-          />
-          <div class="trek-overlay">
-            <div class="trek-difficulty">
-              <span class="difficulty-badge easy">Easy</span>
-            </div>
-          </div>
-        </div>
-        <div class="trek-content">
-          <h3 class="trek-title">Poon Hill Trek</h3>
-          <div class="trek-details">
-            <div class="trek-detail">
-              <i class="fas fa-clock"></i>
-              <span>5 Days</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-mountain"></i>
-              <span>3,210m</span>
-            </div>
-            <div class="trek-detail">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Annapurna Region</span>
-            </div>
-          </div>
-          <p class="trek-description">
-            A short and beautiful trek perfect for beginners, offering
-            spectacular sunrise views over the Annapurna and Dhaulagiri ranges.
-          </p>
-          <div class="trek-price">From $399</div>
-          <button class="trek-button" onclick="viewTrekDetails('poon-hill')">
-            View Details <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
+      {% endfor %} {% for trek in other_treks %}
+      <!-- Same card structure as above for non-featured treks -->
+      {% endfor %}
     </div>
 
     <div class="view-all-treks">
-      <a href="{%url 'treks'%}" class="view-all-button">
+      <a href="{% url 'treks' %}" class="view-all-button">
         Browse All Treks <i class="fas fa-arrow-right"></i>
       </a>
     </div>
